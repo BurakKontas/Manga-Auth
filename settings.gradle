@@ -1,0 +1,6 @@
+rootProject.name = 'manga-auth'
+include 'api'
+include 'application'
+include 'infrastructure'
+include 'domain'
+
