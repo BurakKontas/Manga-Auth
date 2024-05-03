@@ -1,6 +1,7 @@
 package com.aburakkontas.manga_auth.api.controllers;
 
 import an.awesome.pipelinr.Pipeline;
+import com.aburakkontas.manga_auth.application.commands.ChangePasswordCommand;
 import com.aburakkontas.manga_auth.application.commands.Ping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/auth")
 public class AuthController {
 
-     private final Pipeline pipeline;
+    private final Pipeline pipeline;
 
-     @Autowired
-     public AuthController(Pipeline pipeline) {
-         this.pipeline = pipeline;
-     }
+    @Autowired
+    public AuthController(Pipeline pipeline) {
+     this.pipeline = pipeline;
+    }
+
 
     @PostMapping("/login")
     public String login(@RequestBody String username) {
-        return new Ping(username).execute(pipeline);
+        return new ChangePasswordCommand("username", "password", "newPassword").execute(pipeline);
     }
 
     @PostMapping("/register-user")
