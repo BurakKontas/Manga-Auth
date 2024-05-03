@@ -1,6 +1,3 @@
-Sure, here's a basic structure for a README file for your project. You can modify it according to your needs.
-
-```markdown
 # Manga Auth API
 
 Manga Auth API is a Spring Boot application that provides authentication and authorization services for Manga applications.
@@ -54,7 +51,4 @@ Please read [CONTRIBUTING.md](https://github.com/BurakKontas/manga_auth/CONTRIBU
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/BurakKontas/manga_auth/LICENSE.md) file for details
-```
-
-Please replace the placeholders with the actual information about your project.
+This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/BurakKontas/manga_auth/LICENSE.txt) file for details
