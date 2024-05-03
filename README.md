@@ -1,6 +1,6 @@
 # Manga Auth API
 
-Manga Auth API is a Spring Boot application that provides authentication and authorization services for Manga applications.
+Manga Auth API is a Spring Boot application that provides authentication and authorization services for Manga application.
 
 ## Getting Started
 
