@@ -44,11 +44,7 @@ The API provides the following endpoints:
 
 - [Spring Boot](https://spring.io/projects/spring-boot) - The web framework used
 - [FusionAuth](https://fusionauth.io/) - Used for user authentication and authorization
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://github.com/BurakKontas/manga_auth/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
+- 
 ## License
 
-This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/BurakKontas/manga_auth/LICENSE.txt) file for details
+This project is licensed under the Apache License - see the [LICENSE.txt](https://github.com/BurakKontas/manga-auth/blob/main/LICENSE.txt) file for details
