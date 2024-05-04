@@ -1,4 +1,8 @@
 package com.aburakkontas.manga_auth.contracts.request;
 
-public record RefreshTokenRequest() {
+import lombok.Data;
+
+@Data
+public class RefreshTokenRequest {
+    private String refreshToken;
 }

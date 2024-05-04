@@ -1,14 +1,13 @@
 package com.aburakkontas.manga_auth.infrastructure.repositories;
 
 import com.aburakkontas.manga_auth.domain.dtos.*;
-import com.aburakkontas.manga_auth.domain.entities.registration.Registration;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
 import com.aburakkontas.manga_auth.infrastructure.clients.FusionClient;
 import com.aburakkontas.manga_auth.infrastructure.configs.FusionConfig;
-import io.fusionauth.client.FusionAuthClient;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 import io.fusionauth.domain.api.LoginRequest;
+import io.fusionauth.domain.api.jwt.RefreshRequest;
 import io.fusionauth.domain.api.user.ChangePasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.RegistrationRequest;
@@ -32,6 +31,14 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     @Override
     public RegisterResultDTO register(RegisterDTO registerDTO) {
+        //Only Testing Purposes
+        var ifUserExists = fusionClient.getClient().retrieveUserByEmail(registerDTO.getEmail());
+
+        if(ifUserExists.wasSuccessful()) {
+            fusionClient.getClient().deleteUser(ifUserExists.getSuccessResponse().user.id);
+        }
+        //Only Testing Purposes
+
         var user = new User();
         user.email = registerDTO.getEmail();
         user.firstName = registerDTO.getFirstName();
@@ -108,7 +115,7 @@ public class AuthRepositoryImpl implements AuthRepository {
     }
 
     @Override
-    public SendPasswordChangeEmailResultDTO sendPasswordChangeEmail(SendPasswordChangeEmail sendPasswordChangeEmail) {
+    public SendPasswordChangeEmailResultDTO sendPasswordChangeEmail(SendPasswordChangeEmailDTO sendPasswordChangeEmail) {
         var email = sendPasswordChangeEmail.getEmail();
 
         var forgotPasswordRequest = new ForgotPasswordRequest();
@@ -181,5 +188,19 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
 
         return new VerifyRegistrationWithCodeResultDTO(true);
+    }
+
+    @Override
+    public RefreshTokenResultDTO refreshToken(RefreshTokenDTO refreshTokenDTO) {
+        var refreshRequest = new RefreshRequest();
+        refreshRequest.refreshToken = refreshTokenDTO.getRefreshToken();
+
+        var response = fusionClient.getClient().exchangeRefreshTokenForJWT(refreshRequest);
+
+        if(!response.wasSuccessful()) {
+            throw new RuntimeException("Failed to refresh token");
+        }
+
+        return new RefreshTokenResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
     }
 }

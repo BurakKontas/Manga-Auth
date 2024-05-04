@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SendPasswordChangeEmail {
-    private String email;
+public class RefreshTokenResultDTO {
+    private String token;
+    private String refreshToken;
 }

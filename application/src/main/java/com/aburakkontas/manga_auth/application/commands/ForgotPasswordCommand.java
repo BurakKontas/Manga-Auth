@@ -1,11 +1,13 @@
 package com.aburakkontas.manga_auth.application.commands;
 
-import lombok.AllArgsConstructor;
+import com.aburakkontas.manga_auth.application.validators.Validatable;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-public class ForgotPasswordCommand {
+@EqualsAndHashCode(callSuper = true)
+public class ForgotPasswordCommand extends Validatable {
     private String email;
 }

@@ -1,4 +1,9 @@
 package com.aburakkontas.manga_auth.contracts.request;
 
-public record RoleCheckRequest() {
+import lombok.Data;
+
+@Data
+public class RoleCheckRequest {
+    private String email;
+    private String role;
 }

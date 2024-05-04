@@ -17,7 +17,7 @@ public class EmailVerifiedEventHandler {
 
 
     @EventHandler
-    public void on(EmailVerifiedEvent emailVerifiedEvent) {
+    public void handle(EmailVerifiedEvent emailVerifiedEvent) {
         var verificationId = emailVerifiedEvent.getVerificationId();
         var oneTimeCode = emailVerifiedEvent.getOneTimeCode();
 

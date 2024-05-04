@@ -1,4 +1,8 @@
 package com.aburakkontas.manga_auth.contracts.response;
 
-public record ValidateTokenResponse() {
+import lombok.Data;
+
+@Data
+public class ValidateTokenResponse {
+    private boolean isValid;
 }

@@ -1,12 +1,14 @@
 package com.aburakkontas.manga_auth.application.commands;
 
-import lombok.AllArgsConstructor;
+import com.aburakkontas.manga_auth.application.validators.Validatable;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-public class ChangePasswordCommand {
+@EqualsAndHashCode(callSuper = true)
+public class ChangePasswordCommand extends Validatable {
     private String email;
     private String currentPassword;
     private String newPassword;

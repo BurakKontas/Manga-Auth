@@ -1,4 +1,8 @@
 package com.aburakkontas.manga_auth.contracts.response;
 
-public record RoleCheckResponse() {
+import lombok.Data;
+
+@Data
+public class RoleCheckResponse {
+    private boolean hasRole;
 }
