@@ -1,10 +1,9 @@
 package com.aburakkontas.manga_auth.application;
 
-import com.aburakkontas.manga_auth.application.aggregates.RegistrationAggregate;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({RegistrationAggregate.class})
+@ComponentScan("com.aburakkontas.manga_auth.application")
 public class ApplicationInjection {
 }

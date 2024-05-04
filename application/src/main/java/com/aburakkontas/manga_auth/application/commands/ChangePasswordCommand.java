@@ -1,6 +1,12 @@
 package com.aburakkontas.manga_auth.application.commands;
 
-import an.awesome.pipelinr.Command;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record ChangePasswordCommand(String email, String currentPassword, String newPassword) implements Command<String> {
+@Data
+@AllArgsConstructor
+public class ChangePasswordCommand {
+    private String email;
+    private String currentPassword;
+    private String newPassword;
 }

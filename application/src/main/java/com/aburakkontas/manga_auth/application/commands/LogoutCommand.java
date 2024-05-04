@@ -1,6 +1,10 @@
 package com.aburakkontas.manga_auth.application.commands;
 
-import an.awesome.pipelinr.Command;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record LogoutCommand(String refreshToken) implements Command<String> {
+@Data
+@AllArgsConstructor
+public class LogoutCommand {
+    private String refreshToken;
 }

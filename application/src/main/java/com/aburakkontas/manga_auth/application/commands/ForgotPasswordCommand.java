@@ -1,6 +1,10 @@
 package com.aburakkontas.manga_auth.application.commands;
 
-import an.awesome.pipelinr.Command;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record ForgotPasswordCommand(String email) implements Command<String> {
+@Data
+@AllArgsConstructor
+public class ForgotPasswordCommand {
+    private String email;
 }

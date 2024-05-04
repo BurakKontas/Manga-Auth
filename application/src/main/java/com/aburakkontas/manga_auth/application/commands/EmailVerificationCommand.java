@@ -1,6 +1,11 @@
 package com.aburakkontas.manga_auth.application.commands;
 
-import an.awesome.pipelinr.Command;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record EmailVerificationCommand(String verificationId, String oneTimeCode) implements Command<String> {
+@Data
+@AllArgsConstructor
+public class EmailVerificationCommand {
+    private String verificationId;
+    private String oneTimeCode;
 }
