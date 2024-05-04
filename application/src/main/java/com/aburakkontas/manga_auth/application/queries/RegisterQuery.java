@@ -5,15 +5,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-@Getter
-@AllArgsConstructor
+import java.util.UUID;
+
+@Data
+@Builder
+@EqualsAndHashCode(callSuper = true)
 public class RegisterQuery extends Validatable {
 
-    @TargetAggregateIdentifier
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Invalid email format")
     private final String email;

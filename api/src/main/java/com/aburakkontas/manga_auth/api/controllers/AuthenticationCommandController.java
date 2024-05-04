@@ -1,5 +1,6 @@
 package com.aburakkontas.manga_auth.api.controllers;
 
+import com.aburakkontas.manga_auth.application.commands.*;
 import com.aburakkontas.manga_auth.contracts.request.*;
 import com.aburakkontas.manga_auth.contracts.response.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -19,41 +20,73 @@ public class AuthenticationCommandController {
         this.commandGateway = commandGateway;
     }
 
-    //        var command = new RegisterCommand("aburakkontas@hotmail.com", "Arda", "Kontas", "Password123.");
-//
-//        String returnValue;
-//
-//        try {
-//            returnValue = commandGateway.sendAndWait(command);
-//        } catch (Exception e) {
-//            returnValue = e.getLocalizedMessage();
-//        }
-//
-//        return returnValue;
-
     @PostMapping("/change-password")
-    public ResponseEntity<ChangePasswordResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        return ResponseEntity.ok(new ChangePasswordResponse());
+    public String changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        var command = ChangePasswordCommand.builder()
+                .email(changePasswordRequest.getEmail())
+                .currentPassword(changePasswordRequest.getCurrentPassword())
+                .newPassword(changePasswordRequest.getNewPassword())
+                .build();
+
+        String returnValue;
+
+        try {
+            returnValue = commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            returnValue = e.getLocalizedMessage();
+        }
+
+        return returnValue;
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<LogoutResponse> logout(@RequestBody LogoutRequest logoutRequest) {
-        return ResponseEntity.ok(new LogoutResponse());
+    public String logout(@RequestBody LogoutRequest logoutRequest) {
+        var command = LogoutCommand.builder()
+                .refreshToken(logoutRequest.getRefreshToken())
+                .build();
+
+        String returnValue;
+
+        try {
+            returnValue = commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            returnValue = e.getLocalizedMessage();
+        }
+
+        return returnValue;
     }
 
     @PostMapping("/email-verification")
-    public ResponseEntity<EmailVerificationResponse> emailVerification(@RequestBody EmailVerificationRequest emailVerificationRequest) {
-        return ResponseEntity.ok(new EmailVerificationResponse());
+    public String emailVerification(@RequestBody EmailVerificationRequest emailVerificationRequest) {
+        var command = EmailVerificationCommand.builder()
+                .oneTimeCode(emailVerificationRequest.getOneTimeCode())
+                .verificationId(emailVerificationRequest.getRegistrationId())
+                .build();
+
+        String returnValue;
+        try {
+            returnValue = commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            returnValue = e.getLocalizedMessage();
+        }
+        return returnValue;
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<ForgotPasswordResponse> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
-        return ResponseEntity.ok(new ForgotPasswordResponse());
-    }
+    public String forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        var command = ForgotPasswordCommand.builder()
+                .email(forgotPasswordRequest.getEmail())
+                .build();
 
-    @PostMapping("/resend-email-verification")
-    public ResponseEntity<ResendEmailVerificationResponse> resendEmailVerification(@RequestBody ResendEmailVerificationRequest resendEmailVerificationRequest) {
-        return ResponseEntity.ok(new ResendEmailVerificationResponse());
+        String returnValue;
+
+        try {
+            returnValue = commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            returnValue = e.getLocalizedMessage();
+        }
+
+        return returnValue;
     }
 
 }

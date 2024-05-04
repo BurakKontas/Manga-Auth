@@ -1,4 +1,8 @@
 package com.aburakkontas.manga_auth.contracts.request;
 
-public record LogoutRequest() {
+import lombok.Data;
+
+@Data
+public class LogoutRequest {
+    private String refreshToken;
 }

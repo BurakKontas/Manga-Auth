@@ -1,4 +1,10 @@
 package com.aburakkontas.manga_auth.contracts.request;
 
-public record ChangePasswordRequest() {
+import lombok.Data;
+
+@Data
+public class ChangePasswordRequest {
+    private String email;
+    private String currentPassword;
+    private String newPassword;
 }

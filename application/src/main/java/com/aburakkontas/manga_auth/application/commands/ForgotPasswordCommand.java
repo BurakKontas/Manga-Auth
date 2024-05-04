@@ -1,10 +1,11 @@
 package com.aburakkontas.manga_auth.application.commands;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@Builder
 public class ForgotPasswordCommand {
     private String email;
 }
