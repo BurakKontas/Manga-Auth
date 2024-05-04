@@ -70,6 +70,12 @@ public class AuthRepositoryImpl implements AuthRepository {
             throw new RuntimeException("Failed to login user");
         }
 
+        var isVerified = response.getSuccessResponse().user.getRegistrationForApplication(applicationId).verified;
+
+        if(!isVerified) {
+            throw new RuntimeException("User is not verified");
+        }
+
         return new LoginResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
     }
 
