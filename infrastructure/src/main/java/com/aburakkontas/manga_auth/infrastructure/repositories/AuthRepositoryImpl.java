@@ -7,14 +7,21 @@ import com.aburakkontas.manga_auth.infrastructure.configs.FusionConfig;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 import io.fusionauth.domain.api.LoginRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginRequest;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
+import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
+import io.fusionauth.domain.api.passwordless.PasswordlessStartRequest;
 import io.fusionauth.domain.api.user.ChangePasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.RegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
+import io.fusionauth.domain.provider.IdentityProviderType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -202,5 +209,53 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
 
         return new RefreshTokenResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
+    }
+
+    @Override
+    public GenerateGoogleUriResultDTO generateGoogleUri() {
+        String urlBuilder = FusionConfig.GoogleBaseUri +
+                "?client_id=" + FusionConfig.GoogleClientId +
+                "&redirect_uri=" + FusionConfig.oauth2RedirectUri +
+                "&response_type=" + FusionConfig.GoogleResponseType +
+                "&scope=" + FusionConfig.GoogleScope +
+                "&access_type=" + FusionConfig.GoogleAccessType +
+                "&prompt=" + FusionConfig.GooglePrompt +
+                "&flowName=" + FusionConfig.GoogleFlowName +
+                "&service=" + FusionConfig.GoogleService +
+                "&ddm=" + FusionConfig.GoogleDDM +
+                "&o2v=" + FusionConfig.GoogleO2V;
+
+        return new GenerateGoogleUriResultDTO(urlBuilder);
+    }
+
+    @Override
+    public ExchangeOAuth2CodeForJWTResultDTO exchangeOAuth2CodeForJWT(ExchangeOAuth2CodeForJWTDTO exchangeOAuth2CodeForJWTDTO) {
+        var redirectUri = FusionConfig.oauth2RedirectUri;
+        var code = exchangeOAuth2CodeForJWTDTO.getCode();
+        var google = fusionClient.getClient().retrieveIdentityProviderByType(IdentityProviderType.Google);
+
+        if(!google.wasSuccessful()) {
+            throw new RuntimeException("Failed to retrieve Google Identity Provider");
+        }
+
+        var googleId = google.getSuccessResponse().identityProviders.stream().findFirst().orElseThrow().id;
+
+        var req = new IdentityProviderLoginRequest();
+        req.identityProviderId = googleId;
+        req.applicationId = applicationId;
+        req.data = new HashMap<>() {
+            {
+                put("code", code);
+                put("redirect_uri", redirectUri);
+            }
+        };
+
+        var response = fusionClient.getClient().identityProviderLogin(req);
+
+        if(!response.wasSuccessful()) {
+            throw new RuntimeException("Failed to exchange OAuth2 code for JWT");
+        }
+
+        return new ExchangeOAuth2CodeForJWTResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
     }
 }

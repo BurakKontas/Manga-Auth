@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/v1/auth")
+@RequestMapping(path = "/api/v1/auth")
 public class AuthenticationQueryController {
 
     private final QueryGateway queryGateway;
@@ -106,6 +106,19 @@ public class AuthenticationQueryController {
 
         var response = new ResendEmailVerificationResponse();
         response.setRegistrationId(result.getRegistrationId());
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/generate-google-login-uri")
+    public ResponseEntity<GenerateGoogleLoginUriResponse> generateGoogleLoginUri() {
+        var query = GenerateGoogleLoginUriQuery.builder()
+                .build();
+
+        var result = queryGateway.query(query, GenerateGoogleLoginUriQueryResult.class).join();
+
+        var response = new GenerateGoogleLoginUriResponse();
+        response.setUri(result.getUri());
 
         return ResponseEntity.ok(response);
     }

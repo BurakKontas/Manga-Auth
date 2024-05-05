@@ -13,4 +13,6 @@ public interface AuthRepository {
     ValidateTokenResultDTO validateToken(ValidateTokenDTO validateTokenDTO);
     VerifyRegistrationWithCodeResultDTO verifyRegistrationWithCode(VerifyRegistrationWithCodeDTO verifyRegistrationWithCodeDTO);
     RefreshTokenResultDTO refreshToken(RefreshTokenDTO refreshTokenDTO);
+    GenerateGoogleUriResultDTO generateGoogleUri();
+    ExchangeOAuth2CodeForJWTResultDTO exchangeOAuth2CodeForJWT(ExchangeOAuth2CodeForJWTDTO exchangeOAuth2CodeForJWTDTO);
 }

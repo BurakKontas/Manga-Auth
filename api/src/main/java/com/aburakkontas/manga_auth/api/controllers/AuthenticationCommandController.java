@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(path = "/v1/auth")
+@RequestMapping(path = "/api/v1/auth")
 public class AuthenticationCommandController {
 
     private final CommandGateway commandGateway;
