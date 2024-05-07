@@ -1,7 +1,7 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
 import com.aburakkontas.manga_auth.application.events.ForgotPasswordEvent;
-import com.aburakkontas.manga_auth.domain.dtos.SendPasswordChangeEmailDTO;
+import com.aburakkontas.manga_auth.domain.dtos.ForgotPasswordDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
@@ -17,10 +17,11 @@ public class ForgotPasswordEventHandler {
 
     @EventHandler
     public void handle(ForgotPasswordEvent forgotPasswordEvent) {
-        var email = forgotPasswordEvent.getEmail();
+        var changePasswordId = forgotPasswordEvent.getChangePasswordId();
+        var newPassword = forgotPasswordEvent.getNewPassword();
 
-        var forgotPasswordDto = new SendPasswordChangeEmailDTO(email);
+        var forgotPasswordDto = new ForgotPasswordDTO(changePasswordId, newPassword);
 
-        authRepository.sendPasswordChangeEmail(forgotPasswordDto);
+        authRepository.forgotPassword(forgotPasswordDto);
     }
 }

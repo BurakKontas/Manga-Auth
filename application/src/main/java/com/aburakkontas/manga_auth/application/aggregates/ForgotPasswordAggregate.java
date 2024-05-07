@@ -15,7 +15,8 @@ public class ForgotPasswordAggregate {
 
     @AggregateIdentifier
     private String id;
-    private String email;
+    private String changePasswordId;
+    private String newPassword;
 
     public ForgotPasswordAggregate() {
     }
@@ -25,7 +26,8 @@ public class ForgotPasswordAggregate {
         forgotPasswordCommand.throwIfInvalid();
 
         var forgotPasswordEvent = new ForgotPasswordEvent();
-        forgotPasswordEvent.setEmail(forgotPasswordCommand.getEmail());
+        forgotPasswordEvent.setChangePasswordId(forgotPasswordCommand.getChangePasswordId());
+        forgotPasswordEvent.setNewPassword(forgotPasswordCommand.getNewPassword());
 
         AggregateLifecycle.apply(forgotPasswordEvent);
     }
@@ -33,6 +35,7 @@ public class ForgotPasswordAggregate {
     @EventSourcingHandler
     public void on(ForgotPasswordEvent forgotPasswordEvent) {
         this.id = UUID.randomUUID().toString();
-        this.email = forgotPasswordEvent.getEmail();
+        this.changePasswordId = forgotPasswordEvent.getChangePasswordId();
+        this.newPassword = forgotPasswordEvent.getNewPassword();
     }
 }

@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = true)
-public class ForgotPasswordCommand extends Validatable {
-    private String changePasswordId;
-    private String newPassword;
+public class SendForgotPasswordCommand extends Validatable {
+    private String email;
 }

@@ -2,10 +2,8 @@ package com.aburakkontas.manga_auth.api.controllers;
 
 import com.aburakkontas.manga_auth.application.commands.*;
 import com.aburakkontas.manga_auth.contracts.request.*;
-import com.aburakkontas.manga_auth.contracts.response.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -72,10 +70,28 @@ public class AuthenticationCommandController {
         return returnValue;
     }
 
+    @PostMapping("/send-forgot-password-email")
+    public String sendForgotPasswordEmail(@RequestBody SendForgotPasswordRequest sendForgotPasswordRequest) {
+        var command = SendForgotPasswordCommand.builder()
+                .email(sendForgotPasswordRequest.getEmail())
+                .build();
+
+        String returnValue;
+
+        try {
+            returnValue = commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            returnValue = e.getLocalizedMessage();
+        }
+
+        return returnValue;
+    }
+
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
         var command = ForgotPasswordCommand.builder()
-                .email(forgotPasswordRequest.getEmail())
+                .changePasswordId(forgotPasswordRequest.getChangePasswordId())
+                .newPassword(forgotPasswordRequest.getNewPassword())
                 .build();
 
         String returnValue;

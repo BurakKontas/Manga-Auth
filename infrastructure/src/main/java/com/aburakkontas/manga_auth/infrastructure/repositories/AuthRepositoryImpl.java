@@ -38,13 +38,13 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     @Override
     public RegisterResultDTO register(RegisterDTO registerDTO) {
-        //Only Testing Purposes
+        //TODO: Only Testing Purposes
         var ifUserExists = fusionClient.getClient().retrieveUserByEmail(registerDTO.getEmail());
 
         if(ifUserExists.wasSuccessful()) {
             fusionClient.getClient().deleteUser(ifUserExists.getSuccessResponse().user.id);
         }
-        //Only Testing Purposes
+        //TODO: Only Testing Purposes
 
         var user = new User();
         user.email = registerDTO.getEmail();
@@ -257,5 +257,20 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
 
         return new ExchangeOAuth2CodeForJWTResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
+    }
+
+    @Override
+    public ForgotPasswordResultDTO forgotPassword(ForgotPasswordDTO forgotPasswordDTO) {
+        var changePasswordRequest = new ChangePasswordRequest();
+        changePasswordRequest.changePasswordId = forgotPasswordDTO.getChangePasswordId();
+        changePasswordRequest.password = forgotPasswordDTO.getNewPassword();
+
+        var response = fusionClient.getClient().changePasswordByIdentity(changePasswordRequest);
+
+        if(!response.wasSuccessful()) {
+            throw new RuntimeException("Failed to change password");
+        }
+
+        return new ForgotPasswordResultDTO(true);
     }
 }
