@@ -5,6 +5,7 @@ import com.aburakkontas.manga_auth.application.queries.*;
 import com.aburakkontas.manga_auth.application.queries.results.*;
 import com.aburakkontas.manga_auth.contracts.request.*;
 import com.aburakkontas.manga_auth.contracts.response.*;
+import com.aburakkontas.manga_auth.domain.primitives.Result;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class AuthenticationQueryController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Result<LoginResponse>> login(@RequestBody LoginRequest loginRequest) {
         var query = LoginQuery.builder()
                 .email(loginRequest.getEmail())
                 .password(loginRequest.getPassword())
@@ -33,11 +34,11 @@ public class AuthenticationQueryController {
         var response = new LoginResponse();
         BeanUtils.copyProperties(result, response);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<Result<RegisterResponse>> register(@RequestBody RegisterRequest registerRequest) {
         var query = RegisterQuery.builder()
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
@@ -49,11 +50,11 @@ public class AuthenticationQueryController {
         var response = new RegisterResponse();
         response.setRegistrationId(result.getRegistrationId());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 
     @PostMapping("/role-check")
-    public ResponseEntity<RoleCheckResponse> roleCheck(@RequestBody RoleCheckRequest roleCheckRequest) {
+    public ResponseEntity<Result<RoleCheckResponse>> roleCheck(@RequestBody RoleCheckRequest roleCheckRequest) {
         var query = RoleCheckQuery.builder()
                 .email(roleCheckRequest.getEmail())
                 .role(roleCheckRequest.getRole())
@@ -64,11 +65,11 @@ public class AuthenticationQueryController {
         var response = new RoleCheckResponse();
         response.setHasRole(result.isHasRole());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 
     @PostMapping("/validate-token")
-    public ResponseEntity<ValidateTokenResponse> validateToken(@RequestBody ValidateTokenRequest validateTokenRequest) {
+    public ResponseEntity<Result<ValidateTokenResponse>> validateToken(@RequestBody ValidateTokenRequest validateTokenRequest) {
         var query = ValidateTokenQuery.builder()
                 .token(validateTokenRequest.getToken())
                 .build();
@@ -78,11 +79,11 @@ public class AuthenticationQueryController {
         var response = new ValidateTokenResponse();
         response.setValid(result.isValid());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<Result<RefreshTokenResponse>> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         var query = RefreshTokenQuery.builder()
                 .refreshToken(refreshTokenRequest.getRefreshToken())
                 .build();
@@ -93,11 +94,11 @@ public class AuthenticationQueryController {
         response.setToken(result.getToken());
         response.setRefreshToken(result.getRefreshToken());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 
     @PostMapping("/resend-email-verification")
-    public ResponseEntity<ResendEmailVerificationResponse> resendEmailVerification(@RequestBody ResendEmailVerificationRequest resendEmailVerificationRequest) {
+    public ResponseEntity<Result<ResendEmailVerificationResponse>> resendEmailVerification(@RequestBody ResendEmailVerificationRequest resendEmailVerificationRequest) {
         var query = ResendEmailVerificationQuery.builder()
                 .email(resendEmailVerificationRequest.getEmail())
                 .build();
@@ -107,11 +108,11 @@ public class AuthenticationQueryController {
         var response = new ResendEmailVerificationResponse();
         response.setRegistrationId(result.getRegistrationId());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 
     @GetMapping("/generate-google-login-uri")
-    public ResponseEntity<GenerateGoogleLoginUriResponse> generateGoogleLoginUri() {
+    public ResponseEntity<Result<GenerateGoogleLoginUriResponse>> generateGoogleLoginUri() {
         var query = GenerateGoogleLoginUriQuery.builder()
                 .build();
 
@@ -120,6 +121,6 @@ public class AuthenticationQueryController {
         var response = new GenerateGoogleLoginUriResponse();
         response.setUri(result.getUri());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Result.success(response));
     }
 }

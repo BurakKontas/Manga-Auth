@@ -2,6 +2,7 @@ package com.aburakkontas.manga_auth.api.controllers;
 
 import com.aburakkontas.manga_auth.application.commands.*;
 import com.aburakkontas.manga_auth.contracts.request.*;
+import com.aburakkontas.manga_auth.domain.primitives.Result;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,90 +20,57 @@ public class AuthenticationCommandController {
     }
 
     @PostMapping("/change-password")
-    public String changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+    public Result<Object> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
         var command = ChangePasswordCommand.builder()
                 .email(changePasswordRequest.getEmail())
                 .currentPassword(changePasswordRequest.getCurrentPassword())
                 .newPassword(changePasswordRequest.getNewPassword())
                 .build();
 
-        String returnValue;
-
-        try {
-            returnValue = commandGateway.sendAndWait(command);
-        } catch (Exception e) {
-            returnValue = e.getLocalizedMessage();
-        }
-
-        return returnValue;
+        commandGateway.sendAndWait(command);
+        return Result.successWithoutValue();
     }
 
     @PostMapping("/logout")
-    public String logout(@RequestBody LogoutRequest logoutRequest) {
+    public Result<Object> logout(@RequestBody LogoutRequest logoutRequest) {
         var command = LogoutCommand.builder()
                 .refreshToken(logoutRequest.getRefreshToken())
                 .build();
 
-        String returnValue;
-
-        try {
-            returnValue = commandGateway.sendAndWait(command);
-        } catch (Exception e) {
-            returnValue = e.getLocalizedMessage();
-        }
-
-        return returnValue;
+        commandGateway.sendAndWait(command);
+        return Result.successWithoutValue();
     }
 
     @PostMapping("/email-verification")
-    public String emailVerification(@RequestBody EmailVerificationRequest emailVerificationRequest) {
+    public Result<Object> emailVerification(@RequestBody EmailVerificationRequest emailVerificationRequest) {
         var command = EmailVerificationCommand.builder()
                 .oneTimeCode(emailVerificationRequest.getOneTimeCode())
                 .verificationId(emailVerificationRequest.getRegistrationId())
                 .build();
 
-        String returnValue;
-        try {
-            returnValue = commandGateway.sendAndWait(command);
-        } catch (Exception e) {
-            returnValue = e.getLocalizedMessage();
-        }
-        return returnValue;
+        commandGateway.sendAndWait(command);
+        return Result.successWithoutValue();
     }
 
     @PostMapping("/send-forgot-password-email")
-    public String sendForgotPasswordEmail(@RequestBody SendForgotPasswordRequest sendForgotPasswordRequest) {
+    public Result<Object> sendForgotPasswordEmail(@RequestBody SendForgotPasswordRequest sendForgotPasswordRequest) {
         var command = SendForgotPasswordCommand.builder()
                 .email(sendForgotPasswordRequest.getEmail())
                 .build();
 
-        String returnValue;
-
-        try {
-            returnValue = commandGateway.sendAndWait(command);
-        } catch (Exception e) {
-            returnValue = e.getLocalizedMessage();
-        }
-
-        return returnValue;
+        commandGateway.sendAndWait(command);
+        return Result.successWithoutValue();
     }
 
     @PostMapping("/forgot-password")
-    public String forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+    public Result<Object> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
         var command = ForgotPasswordCommand.builder()
                 .changePasswordId(forgotPasswordRequest.getChangePasswordId())
                 .newPassword(forgotPasswordRequest.getNewPassword())
                 .build();
 
-        String returnValue;
-
-        try {
-            returnValue = commandGateway.sendAndWait(command);
-        } catch (Exception e) {
-            returnValue = e.getLocalizedMessage();
-        }
-
-        return returnValue;
+        commandGateway.sendAndWait(command);
+        return Result.successWithoutValue();
     }
 
 }
