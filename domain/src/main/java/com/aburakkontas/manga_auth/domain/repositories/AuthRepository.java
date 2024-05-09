@@ -16,4 +16,5 @@ public interface AuthRepository {
     GenerateGoogleUriResultDTO generateGoogleUri();
     ExchangeOAuth2CodeForJWTResultDTO exchangeOAuth2CodeForJWT(ExchangeOAuth2CodeForJWTDTO exchangeOAuth2CodeForJWTDTO);
     ForgotPasswordResultDTO forgotPassword(ForgotPasswordDTO forgotPasswordDTO);
+    GetAllErrorCodesResultDTO getAllErrorCodes();
 }

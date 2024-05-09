@@ -1,5 +1,7 @@
 package com.aburakkontas.manga_auth.application.validators;
 
+import com.aburakkontas.manga_auth.domain.exceptions.ErrorCodes;
+import com.aburakkontas.manga_auth.domain.exceptions.ExceptionWithErrorCode;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -31,7 +33,7 @@ public abstract class Validatable {
     public void throwIfInvalid() {
         List<String> violations = validate();
         if (!violations.isEmpty()) {
-            throw new IllegalArgumentException("Invalid command: " + violations);
+            throw new ExceptionWithErrorCode("Invalid command: " + violations, ErrorCodes.VALIDATION_ERROR);
         }
     }
 }

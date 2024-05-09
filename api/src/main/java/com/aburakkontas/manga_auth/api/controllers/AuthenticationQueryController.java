@@ -123,4 +123,17 @@ public class AuthenticationQueryController {
 
         return ResponseEntity.ok(Result.success(response));
     }
+
+    @GetMapping("/get-all-error-codes")
+    public ResponseEntity<Result<GetAllErrorCodesResponse>> getAllErrorCodes() {
+        var query = GetAllErrorCodesQuery.builder()
+                .build();
+
+        var result = queryGateway.query(query, GetAllErrorCodesQueryResult.class).join();
+
+        var response = new GetAllErrorCodesResponse();
+        response.setErrorCodes(result.getErrorCodes());
+
+        return ResponseEntity.ok(Result.success(response));
+    }
 }

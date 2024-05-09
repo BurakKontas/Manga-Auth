@@ -1,5 +1,6 @@
 package com.aburakkontas.manga_auth.api;
 
+import com.aburakkontas.manga_auth.domain.exceptions.ExceptionWithErrorCode;
 import com.aburakkontas.manga_auth.domain.primitives.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,5 +15,12 @@ public class GlobalExceptionHandler {
         // Genel hata durumu için Result.failure kullanarak bir Result döndür
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Result.failure(ex.getMessage(), "500"));
+    }
+
+    @ExceptionHandler(ExceptionWithErrorCode.class)
+    public ResponseEntity<Result<String>> handleExceptionWithErrorCode(ExceptionWithErrorCode ex) {
+        // ExceptionWithErrorCode tipindeki hata durumu için Result.failure kullanarak bir Result döndür
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Result.failure(ex.getMessage(), ex.getCode()));
     }
 }

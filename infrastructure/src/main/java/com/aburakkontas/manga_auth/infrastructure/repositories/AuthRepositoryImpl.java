@@ -1,6 +1,8 @@
 package com.aburakkontas.manga_auth.infrastructure.repositories;
 
 import com.aburakkontas.manga_auth.domain.dtos.*;
+import com.aburakkontas.manga_auth.domain.exceptions.ErrorCodes;
+import com.aburakkontas.manga_auth.domain.exceptions.ExceptionWithErrorCode;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
 import com.aburakkontas.manga_auth.infrastructure.clients.FusionClient;
 import com.aburakkontas.manga_auth.infrastructure.configs.FusionConfig;
@@ -8,10 +10,7 @@ import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 import io.fusionauth.domain.api.LoginRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
-import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginRequest;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
-import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
-import io.fusionauth.domain.api.passwordless.PasswordlessStartRequest;
 import io.fusionauth.domain.api.user.ChangePasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.RegistrationRequest;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -43,6 +41,8 @@ public class AuthRepositoryImpl implements AuthRepository {
 
         if(ifUserExists.wasSuccessful()) {
             fusionClient.getClient().deleteUser(ifUserExists.getSuccessResponse().user.id);
+
+            throw new ExceptionWithErrorCode("User already exists", ErrorCodes.USER_ALREADY_EXISTS);
         }
         //TODO: Only Testing Purposes
 
@@ -65,7 +65,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().register(null, registerRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to register user");
+            throw new ExceptionWithErrorCode("Failed to register user", ErrorCodes.FAILED_TO_REGISTER_USER);
         }
 
         return new RegisterResultDTO(response.getSuccessResponse().registrationVerificationId);
@@ -81,13 +81,13 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().login(loginRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to login user");
+            throw new ExceptionWithErrorCode("User not found or password is incorrect", ErrorCodes.USER_NOT_FOUND_OR_PASSWORD_INCORRECT);
         }
 
         var isVerified = response.getSuccessResponse().user.getRegistrationForApplication(applicationId).verified;
 
         if(!isVerified) {
-            throw new RuntimeException("User is not verified");
+            throw new ExceptionWithErrorCode("User is not verified", ErrorCodes.USER_IS_NOT_VERIFIED);
         }
 
         return new LoginResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
@@ -98,7 +98,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().logout(false, logoutDTO.getRefreshToken());
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to logout user");
+            throw new ExceptionWithErrorCode("Failed to logout user", ErrorCodes.FAILED_TO_LOGOUT_USER);
         }
 
         return new LogoutResultDTO(true);
@@ -115,7 +115,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().changePasswordByIdentity(changePasswordRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to change password");
+            throw new ExceptionWithErrorCode("Failed to change password", ErrorCodes.FAILED_TO_CHANGE_PASSWORD);
         }
 
         return new PasswordChangeResultDTO(true);
@@ -133,7 +133,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().forgotPassword(forgotPasswordRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to send password change email");
+            throw new ExceptionWithErrorCode("Failed to send password change email", ErrorCodes.FAILED_TO_SEND_PASSWORD_CHANGE_EMAIL);
         }
 
         return new SendPasswordChangeEmailResultDTO(true);
@@ -145,7 +145,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().resendRegistrationVerification(email, applicationId);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to send password change email");
+            throw new ExceptionWithErrorCode("Failed to send password change email", ErrorCodes.FAILED_TO_SEND_PASSWORD_CHANGE_EMAIL);
         }
 
         return new ResendEmailVerificationResultDTO(response.getSuccessResponse().verificationId);
@@ -157,13 +157,13 @@ public class AuthRepositoryImpl implements AuthRepository {
         var user = fusionClient.getClient().retrieveUserByLoginId(email);
 
         if(!user.wasSuccessful()) {
-            throw new RuntimeException("Failed to retrieve user");
+            throw new ExceptionWithErrorCode("Failed to retrieve user", ErrorCodes.FAILED_TO_RETRIEVE_USER);
         }
 
         var registration = fusionClient.getClient().retrieveRegistration(user.getSuccessResponse().user.id, applicationId);
 
         if(!registration.wasSuccessful()) {
-            throw new RuntimeException("Failed to retrieve registration");
+            throw new ExceptionWithErrorCode("Failed to retrieve registration", ErrorCodes.FAILED_TO_RETRIEVE_USER);
         }
 
         var hasRole = registration.getSuccessResponse().registration.roles.contains(hasRoleDTO.getRoleName());
@@ -176,7 +176,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().validateJWT(validateTokenDTO.getToken());
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to validate token");
+            throw new ExceptionWithErrorCode("Failed to validate token", ErrorCodes.FAILED_TO_VALIDATE_TOKEN);
         }
 
         return new ValidateTokenResultDTO(!response.getSuccessResponse().jwt.isExpired());
@@ -191,7 +191,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().verifyUserRegistration(verifyRegistrationRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to verify registration");
+            throw new ExceptionWithErrorCode("Failed to verify registration", ErrorCodes.FAILED_TO_REGISTER_USER);
         }
 
         return new VerifyRegistrationWithCodeResultDTO(true);
@@ -205,7 +205,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().exchangeRefreshTokenForJWT(refreshRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to refresh token");
+            throw new ExceptionWithErrorCode("Failed to refresh token", ErrorCodes.FAILED_TO_REFRESH_TOKEN);
         }
 
         return new RefreshTokenResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
@@ -235,7 +235,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var google = fusionClient.getClient().retrieveIdentityProviderByType(IdentityProviderType.Google);
 
         if(!google.wasSuccessful()) {
-            throw new RuntimeException("Failed to retrieve Google Identity Provider");
+            throw new ExceptionWithErrorCode("Failed to retrieve Google Identity Provider", ErrorCodes.FAILED_TO_RETRIEVE_GOOGLE_IDENTITY_PROVIDER);
         }
 
         var googleId = google.getSuccessResponse().identityProviders.stream().findFirst().orElseThrow().id;
@@ -253,7 +253,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().identityProviderLogin(req);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to exchange OAuth2 code for JWT");
+            throw new ExceptionWithErrorCode("Failed to exchange OAuth2 code for JWT", ErrorCodes.FAILED_TO_EXCHANGE_OAUTH2_CODE_FOR_JWT);
         }
 
         return new ExchangeOAuth2CodeForJWTResultDTO(response.getSuccessResponse().token, response.getSuccessResponse().refreshToken);
@@ -268,9 +268,25 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().changePasswordByIdentity(changePasswordRequest);
 
         if(!response.wasSuccessful()) {
-            throw new RuntimeException("Failed to change password");
+            throw new ExceptionWithErrorCode("Failed to change password", ErrorCodes.FAILED_TO_CHANGE_PASSWORD);
         }
 
         return new ForgotPasswordResultDTO(true);
+    }
+
+    @Override
+    public GetAllErrorCodesResultDTO getAllErrorCodes() {
+        var errors = ErrorCodes.class.getDeclaredFields();
+        var errorCodes = new HashMap<String, String>();
+
+        for(var error : errors) {
+            try {
+                errorCodes.put(error.getName(), error.get(null).toString());
+            } catch (IllegalAccessException e) {
+                throw new ExceptionWithErrorCode("Mapping Error", ErrorCodes.MAPPING_ERROR);
+            }
+        }
+
+        return new GetAllErrorCodesResultDTO(errorCodes);
     }
 }
