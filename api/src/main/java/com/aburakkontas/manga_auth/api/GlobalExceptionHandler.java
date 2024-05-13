@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Result<String>> handleException(Exception ex) {
-        // Genel hata durumu için Result.failure kullanarak bir Result döndür
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Result.failure(ex.getMessage(), "500"));
-    }
-
+    //set priority
     @ExceptionHandler(ExceptionWithErrorCode.class)
     public ResponseEntity<Result<String>> handleExceptionWithErrorCode(ExceptionWithErrorCode ex) {
         // ExceptionWithErrorCode tipindeki hata durumu için Result.failure kullanarak bir Result döndür

@@ -19,33 +19,10 @@ public class AuthenticationCommandController {
         this.commandGateway = commandGateway;
     }
 
-    @PostMapping("/change-password")
-    public Result<Object> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        var command = ChangePasswordCommand.builder()
-                .email(changePasswordRequest.getEmail())
-                .currentPassword(changePasswordRequest.getCurrentPassword())
-                .newPassword(changePasswordRequest.getNewPassword())
-                .build();
-
-        commandGateway.sendAndWait(command);
-        return Result.successWithoutValue();
-    }
-
     @PostMapping("/logout")
     public Result<Object> logout(@RequestBody LogoutRequest logoutRequest) {
         var command = LogoutCommand.builder()
                 .refreshToken(logoutRequest.getRefreshToken())
-                .build();
-
-        commandGateway.sendAndWait(command);
-        return Result.successWithoutValue();
-    }
-
-    @PostMapping("/email-verification")
-    public Result<Object> emailVerification(@RequestBody EmailVerificationRequest emailVerificationRequest) {
-        var command = EmailVerificationCommand.builder()
-                .oneTimeCode(emailVerificationRequest.getOneTimeCode())
-                .verificationId(emailVerificationRequest.getRegistrationId())
                 .build();
 
         commandGateway.sendAndWait(command);

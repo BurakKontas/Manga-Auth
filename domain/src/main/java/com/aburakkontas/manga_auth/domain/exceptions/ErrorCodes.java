@@ -15,4 +15,5 @@ public class ErrorCodes {
     public static final String FAILED_TO_EXCHANGE_OAUTH2_CODE_FOR_JWT = "500T";
     public static final String VALIDATION_ERROR = "500V";
     public static final String MAPPING_ERROR = "500M";
+    public static final String FAILED_TO_VERIFY_EMAIL = "500K";
 }

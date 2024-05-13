@@ -136,4 +136,35 @@ public class AuthenticationQueryController {
 
         return ResponseEntity.ok(Result.success(response));
     }
+
+    @PostMapping("/email-verification")
+    public ResponseEntity<Result<EmailVerificationResponse>> emailVerification(@RequestBody EmailVerificationRequest emailVerificationRequest) {
+        var query = EmailVerificationQuery.builder()
+                .oneTimeCode(emailVerificationRequest.getOneTimeCode())
+                .verificationId(emailVerificationRequest.getRegistrationId())
+                .build();
+
+        var result = queryGateway.query(query, EmailVerificationQueryResult.class).join();
+
+        var response = new EmailVerificationResponse();
+        response.setVerified(result.isVerified());
+
+        return ResponseEntity.ok(Result.success(response));
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<Result<ChangePasswordResponse>> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        var query = ChangePasswordQuery.builder()
+                .email(changePasswordRequest.getEmail())
+                .currentPassword(changePasswordRequest.getCurrentPassword())
+                .newPassword(changePasswordRequest.getNewPassword())
+                .build();
+
+        var result = queryGateway.query(query, ChangePasswordQueryResult.class).join();
+
+        var response = new ChangePasswordResponse();
+        response.setChanged(result.isChanged());
+
+        return ResponseEntity.ok(Result.success(response));
+    }
 }

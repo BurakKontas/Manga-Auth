@@ -1,7 +1,6 @@
-package com.aburakkontas.manga_auth.application.commands;
+package com.aburakkontas.manga_auth.application.queries;
 
 import com.aburakkontas.manga_auth.application.validators.Validatable;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = true)
-public class EmailVerificationCommand extends Validatable {
+public class EmailVerificationQuery extends Validatable {
     private String verificationId;
     private String oneTimeCode;
 }

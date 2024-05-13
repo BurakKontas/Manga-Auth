@@ -42,7 +42,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         if(ifUserExists.wasSuccessful()) {
             fusionClient.getClient().deleteUser(ifUserExists.getSuccessResponse().user.id);
 
-            throw new ExceptionWithErrorCode("User already exists", ErrorCodes.USER_ALREADY_EXISTS);
+//            throw new ExceptionWithErrorCode("User already exists", ErrorCodes.USER_ALREADY_EXISTS);
         }
         //TODO: Only Testing Purposes
 
@@ -191,7 +191,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().verifyUserRegistration(verifyRegistrationRequest);
 
         if(!response.wasSuccessful()) {
-            throw new ExceptionWithErrorCode("Failed to verify registration", ErrorCodes.FAILED_TO_REGISTER_USER);
+            throw new ExceptionWithErrorCode("Failed to verify registration", ErrorCodes.FAILED_TO_VERIFY_EMAIL);
         }
 
         return new VerifyRegistrationWithCodeResultDTO(true);
