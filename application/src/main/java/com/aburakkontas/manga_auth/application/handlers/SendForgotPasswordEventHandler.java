@@ -1,8 +1,8 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
-import com.aburakkontas.manga_auth.application.events.SendForgotPasswordEvent;
 import com.aburakkontas.manga_auth.domain.dtos.SendPasswordChangeEmailDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
+import com.aburakkontas.manga_axon.auth.events.SendForgotPasswordEvent;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
 

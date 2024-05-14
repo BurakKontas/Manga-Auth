@@ -13,13 +13,12 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 
 dependencies {
     implementation project(":domain")
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -28,6 +27,7 @@ dependencies {
     implementation 'org.axonframework:axon-configuration:4.9.3'
     implementation 'org.axonframework:axon-server-connector:4.9.3'
     implementation 'com.google.guava:guava:33.1.0-jre'
+    implementation "com.aburakkontas.manga.common:manga-axon:1.0.2"
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
 

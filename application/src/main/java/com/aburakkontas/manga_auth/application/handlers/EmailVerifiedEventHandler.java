@@ -1,9 +1,9 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
-import com.aburakkontas.manga_auth.application.queries.EmailVerificationQuery;
-import com.aburakkontas.manga_auth.application.queries.results.EmailVerificationQueryResult;
 import com.aburakkontas.manga_auth.domain.dtos.VerifyRegistrationWithCodeDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
+import com.aburakkontas.manga_axon.auth.queries.EmailVerificationQuery;
+import com.aburakkontas.manga_axon.auth.queries.results.EmailVerificationQueryResult;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;

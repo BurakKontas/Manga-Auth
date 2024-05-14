@@ -1,7 +1,7 @@
 package com.aburakkontas.manga_auth.application.aggregates;
 
-import com.aburakkontas.manga_auth.application.commands.LogoutCommand;
 import com.aburakkontas.manga_auth.application.events.LogoutEvent;
+import com.aburakkontas.manga_axon.auth.commands.LogoutCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -22,7 +22,6 @@ public class LogoutAggregate {
 
     @CommandHandler
     public LogoutAggregate(LogoutCommand logoutCommand) {
-        logoutCommand.throwIfInvalid();
 
         var logoutEvent = new LogoutEvent();
         logoutEvent.setRefreshToken(logoutCommand.getRefreshToken());

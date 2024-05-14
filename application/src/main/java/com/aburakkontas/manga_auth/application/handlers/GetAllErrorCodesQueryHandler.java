@@ -1,9 +1,10 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
 
-import com.aburakkontas.manga_auth.application.queries.GetAllErrorCodesQuery;
-import com.aburakkontas.manga_auth.application.queries.results.GetAllErrorCodesQueryResult;
+
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
+import com.aburakkontas.manga_axon.auth.queries.GetAllErrorCodesQuery;
+import com.aburakkontas.manga_axon.auth.queries.results.GetAllErrorCodesQueryResult;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
-import com.aburakkontas.manga_auth.application.queries.OAuth2CallbackQuery;
-import com.aburakkontas.manga_auth.application.queries.results.OAuth2CallbackQueryResult;
+import com.aburakkontas.manga_axon.auth.queries.OAuth2CallbackQuery;
+import com.aburakkontas.manga_axon.auth.queries.results.OAuth2CallbackQueryResult;
 import com.aburakkontas.manga_auth.domain.dtos.ExchangeOAuth2CodeForJWTDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
 import org.axonframework.queryhandling.QueryHandler;

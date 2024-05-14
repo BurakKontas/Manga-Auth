@@ -1,11 +1,10 @@
 package com.aburakkontas.manga_auth.api.controllers;
 
-import com.aburakkontas.manga_auth.application.commands.ResendEmailVerificationQuery;
-import com.aburakkontas.manga_auth.application.queries.*;
-import com.aburakkontas.manga_auth.application.queries.results.*;
 import com.aburakkontas.manga_auth.contracts.request.*;
 import com.aburakkontas.manga_auth.contracts.response.*;
 import com.aburakkontas.manga_auth.domain.primitives.Result;
+import com.aburakkontas.manga_axon.auth.queries.*;
+import com.aburakkontas.manga_axon.auth.queries.results.*;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,7 +10,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.sizovs:pipelinr:0.8'
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
 

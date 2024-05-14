@@ -16,6 +16,7 @@ import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.RegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.provider.IdentityProviderType;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,15 +37,13 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     @Override
     public RegisterResultDTO register(RegisterDTO registerDTO) {
-        //TODO: Only Testing Purposes
         var ifUserExists = fusionClient.getClient().retrieveUserByEmail(registerDTO.getEmail());
 
         if(ifUserExists.wasSuccessful()) {
-            fusionClient.getClient().deleteUser(ifUserExists.getSuccessResponse().user.id);
+//            fusionClient.getClient().deleteUser(ifUserExists.getSuccessResponse().user.id);
 
-//            throw new ExceptionWithErrorCode("User already exists", ErrorCodes.USER_ALREADY_EXISTS);
+            throw new ExceptionWithErrorCode("User already exists", ErrorCodes.USER_ALREADY_EXISTS);
         }
-        //TODO: Only Testing Purposes
 
         var user = new User();
         user.email = registerDTO.getEmail();
@@ -277,11 +276,11 @@ public class AuthRepositoryImpl implements AuthRepository {
     @Override
     public GetAllErrorCodesResultDTO getAllErrorCodes() {
         var errors = ErrorCodes.class.getDeclaredFields();
-        var errorCodes = new HashMap<String, String>();
+        var errorCodes = new HashMap<String, Integer>();
 
         for(var error : errors) {
             try {
-                errorCodes.put(error.getName(), error.get(null).toString());
+                errorCodes.put(error.getName(), (Integer) error.get(null));
             } catch (IllegalAccessException e) {
                 throw new ExceptionWithErrorCode("Mapping Error", ErrorCodes.MAPPING_ERROR);
             }

@@ -8,5 +8,5 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class GetAllErrorCodesResultDTO {
-    private Map<String, String> errorCodes;
+    private Map<String, Integer> errorCodes;
 }

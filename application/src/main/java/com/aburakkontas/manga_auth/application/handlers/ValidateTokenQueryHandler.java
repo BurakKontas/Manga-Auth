@@ -1,9 +1,9 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
-import com.aburakkontas.manga_auth.application.queries.ValidateTokenQuery;
-import com.aburakkontas.manga_auth.application.queries.results.ValidateTokenQueryResult;
 import com.aburakkontas.manga_auth.domain.dtos.ValidateTokenDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
+import com.aburakkontas.manga_axon.auth.queries.ValidateTokenQuery;
+import com.aburakkontas.manga_axon.auth.queries.results.ValidateTokenQueryResult;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 

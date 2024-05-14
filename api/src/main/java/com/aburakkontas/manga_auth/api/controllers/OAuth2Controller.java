@@ -1,8 +1,8 @@
 package com.aburakkontas.manga_auth.api.controllers;
 
-import com.aburakkontas.manga_auth.application.queries.OAuth2CallbackQuery;
-import com.aburakkontas.manga_auth.application.queries.results.OAuth2CallbackQueryResult;
 import com.aburakkontas.manga_auth.contracts.response.OAuth2CallbackResponse;
+import com.aburakkontas.manga_axon.auth.queries.OAuth2CallbackQuery;
+import com.aburakkontas.manga_axon.auth.queries.results.OAuth2CallbackQueryResult;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,5 +6,5 @@ import java.util.Map;
 
 @Data
 public class GetAllErrorCodesResponse {
-    private Map<String, String> errorCodes;
+    private Map<String, Integer> errorCodes;
 }

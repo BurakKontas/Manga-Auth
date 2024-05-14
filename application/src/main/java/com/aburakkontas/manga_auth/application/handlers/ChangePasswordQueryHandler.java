@@ -1,10 +1,9 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
-import com.aburakkontas.manga_auth.application.queries.ChangePasswordQuery;
-import com.aburakkontas.manga_auth.application.queries.results.ChangePasswordQueryResult;
+import com.aburakkontas.manga_axon.auth.queries.ChangePasswordQuery;
+import com.aburakkontas.manga_axon.auth.queries.results.ChangePasswordQueryResult;
 import com.aburakkontas.manga_auth.domain.dtos.PasswordChangeDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
-import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.aburakkontas.manga_auth.application.aggregates;
 
-import com.aburakkontas.manga_auth.application.commands.SendForgotPasswordCommand;
 import com.aburakkontas.manga_auth.application.events.SendForgotPasswordEvent;
+import com.aburakkontas.manga_axon.auth.commands.SendForgotPasswordCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -22,7 +22,6 @@ public class SendForgotPasswordAggregate {
 
     @CommandHandler
     public SendForgotPasswordAggregate(SendForgotPasswordCommand forgotPasswordCommand) {
-        forgotPasswordCommand.throwIfInvalid();
 
         var forgotPasswordEvent = new SendForgotPasswordEvent();
         forgotPasswordEvent.setEmail(forgotPasswordCommand.getEmail());
