@@ -1,7 +1,7 @@
 package com.aburakkontas.manga_auth.application.aggregates;
 
-import com.aburakkontas.manga_auth.application.events.ForgotPasswordEvent;
 import com.aburakkontas.manga_axon.auth.commands.ForgotPasswordCommand;
+import com.aburakkontas.manga_axon.auth.events.ForgotPasswordEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
