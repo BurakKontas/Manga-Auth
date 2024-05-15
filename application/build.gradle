@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.axonframework:axon-configuration:4.9.3'
     implementation 'org.axonframework:axon-server-connector:4.9.3'
     implementation 'com.google.guava:guava:33.1.0-jre'
-    implementation "com.aburakkontas.manga.common:manga-axon:1.0.2"
+    implementation "com.aburakkontas.manga.common:interactions:1.0.2"
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
 

@@ -2,8 +2,8 @@ package com.aburakkontas.manga_auth.application.handlers;
 
 import com.aburakkontas.manga_auth.domain.dtos.HasRoleDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
-import com.aburakkontas.manga_axon.auth.queries.RoleCheckQuery;
-import com.aburakkontas.manga_axon.auth.queries.results.RoleCheckQueryResult;
+import com.aburakkontas.manga.common.auth.queries.RoleCheckQuery;
+import com.aburakkontas.manga.common.auth.queries.results.RoleCheckQueryResult;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 

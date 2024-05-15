@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
     implementation 'org.axonframework:axon-spring-boot-starter:4.9.3'
-    implementation "com.aburakkontas.manga.common:manga-axon:1.0.2"
+    implementation "com.aburakkontas.manga.common:interactions:1.0.2"
 
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'

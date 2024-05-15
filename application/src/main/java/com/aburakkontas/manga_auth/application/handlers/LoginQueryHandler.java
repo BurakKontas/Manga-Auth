@@ -3,8 +3,8 @@ package com.aburakkontas.manga_auth.application.handlers;
 
 import com.aburakkontas.manga_auth.domain.dtos.LoginDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
-import com.aburakkontas.manga_axon.auth.queries.LoginQuery;
-import com.aburakkontas.manga_axon.auth.queries.results.LoginQueryResult;
+import com.aburakkontas.manga.common.auth.queries.LoginQuery;
+import com.aburakkontas.manga.common.auth.queries.results.LoginQueryResult;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

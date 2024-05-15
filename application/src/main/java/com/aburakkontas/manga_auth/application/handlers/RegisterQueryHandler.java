@@ -2,8 +2,8 @@ package com.aburakkontas.manga_auth.application.handlers;
 
 import com.aburakkontas.manga_auth.domain.dtos.RegisterDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
-import com.aburakkontas.manga_axon.auth.queries.RegisterQuery;
-import com.aburakkontas.manga_axon.auth.queries.results.RegisterQueryResult;
+import com.aburakkontas.manga.common.auth.queries.RegisterQuery;
+import com.aburakkontas.manga.common.auth.queries.results.RegisterQueryResult;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

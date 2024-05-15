@@ -1,7 +1,7 @@
 package com.aburakkontas.manga_auth.application.aggregates;
 
-import com.aburakkontas.manga_axon.auth.commands.LogoutCommand;
-import com.aburakkontas.manga_axon.auth.events.LogoutEvent;
+import com.aburakkontas.manga.common.auth.commands.LogoutCommand;
+import com.aburakkontas.manga.common.auth.events.LogoutEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;

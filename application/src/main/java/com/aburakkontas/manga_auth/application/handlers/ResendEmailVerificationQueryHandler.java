@@ -1,10 +1,10 @@
 package com.aburakkontas.manga_auth.application.handlers;
 
-import com.aburakkontas.manga_axon.auth.queries.ResendEmailVerificationQuery;
+import com.aburakkontas.manga.common.auth.queries.ResendEmailVerificationQuery;
 
 import com.aburakkontas.manga_auth.domain.dtos.ResendEmailVerificationDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
-import com.aburakkontas.manga_axon.auth.queries.results.ResendEmailVerificationQueryResult;
+import com.aburakkontas.manga.common.auth.queries.results.ResendEmailVerificationQueryResult;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 

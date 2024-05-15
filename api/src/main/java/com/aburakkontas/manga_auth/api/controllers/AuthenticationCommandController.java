@@ -2,7 +2,7 @@ package com.aburakkontas.manga_auth.api.controllers;
 
 import com.aburakkontas.manga_auth.contracts.request.*;
 import com.aburakkontas.manga_auth.domain.primitives.Result;
-import com.aburakkontas.manga_axon.auth.commands.*;
+import com.aburakkontas.manga.common.auth.commands.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
