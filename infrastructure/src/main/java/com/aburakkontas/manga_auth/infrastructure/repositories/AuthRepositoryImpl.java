@@ -174,6 +174,10 @@ public class AuthRepositoryImpl implements AuthRepository {
     public ValidateTokenResultDTO validateToken(ValidateTokenDTO validateTokenDTO) {
         var response = fusionClient.getClient().validateJWT(validateTokenDTO.getToken());
 
+        if(!response.wasSuccessful() && response.status == 401) {
+            return new ValidateTokenResultDTO(false);
+        }
+
         if(!response.wasSuccessful()) {
             throw new ExceptionWithErrorCode("Failed to validate token", ErrorCodes.FAILED_TO_VALIDATE_TOKEN);
         }
