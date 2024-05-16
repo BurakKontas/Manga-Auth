@@ -17,4 +17,5 @@ public interface AuthRepository {
     ExchangeOAuth2CodeForJWTResultDTO exchangeOAuth2CodeForJWT(ExchangeOAuth2CodeForJWTDTO exchangeOAuth2CodeForJWTDTO);
     ForgotPasswordResultDTO forgotPassword(ForgotPasswordDTO forgotPasswordDTO);
     GetAllErrorCodesResultDTO getAllErrorCodes();
+    GetUserDetailsFromTokenResultDTO getUserDetailsFromToken(GetUserDetailsFromTokenDTO getUserDetailsFromTokenDTO);
 }

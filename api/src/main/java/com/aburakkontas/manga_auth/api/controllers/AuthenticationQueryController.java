@@ -166,4 +166,24 @@ public class AuthenticationQueryController {
 
         return ResponseEntity.ok(Result.success(response));
     }
+
+    @PostMapping("/get-user-details-from-token")
+    public ResponseEntity<Result<GetUserDetailsFromTokenResponse>> getUserDetailsFromToken(@RequestBody GetUserDetailsFromTokenRequest getUserDetailsFromTokenRequest) {
+        var query = GetUserDetailsFromTokenQuery.builder()
+                .token(getUserDetailsFromTokenRequest.getToken())
+                .build();
+
+        var result = queryGateway.query(query, GetUserDetailsFromTokenQueryResult.class).join();
+
+        var response = new GetUserDetailsFromTokenResponse();
+        response.setEmail(result.getEmail());
+        response.setFirstName(result.getFirstName());
+        response.setLastName(result.getLastName());
+        response.setPermissions(result.getPermissions());
+        response.setUsername(result.getUsername());
+        response.setUserId(result.getUserId());
+        response.setLastLogin(result.getLastLogin());
+
+        return ResponseEntity.ok(Result.success(response));
+    }
 }
