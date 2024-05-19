@@ -19,6 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
         http.cors(Customizer.withDefaults());
 
         http.authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/v1/auth/get-user-details-by-id").hasAuthority("Admin")
             .anyRequest().permitAll()
         );
 

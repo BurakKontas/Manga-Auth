@@ -18,4 +18,5 @@ public interface AuthRepository {
     ForgotPasswordResultDTO forgotPassword(ForgotPasswordDTO forgotPasswordDTO);
     GetAllErrorCodesResultDTO getAllErrorCodes();
     GetUserDetailsFromTokenResultDTO getUserDetailsFromToken(GetUserDetailsFromTokenDTO getUserDetailsFromTokenDTO);
+    GetUserDetailsByIdResultDTO getUserDetailsById(GetUserDetailsByIdDTO getUserDetailsByIdDTO);
 }

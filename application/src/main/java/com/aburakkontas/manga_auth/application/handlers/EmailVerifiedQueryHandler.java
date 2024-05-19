@@ -4,16 +4,15 @@ import com.aburakkontas.manga_auth.domain.dtos.VerifyRegistrationWithCodeDTO;
 import com.aburakkontas.manga_auth.domain.repositories.AuthRepository;
 import com.aburakkontas.manga.common.auth.queries.EmailVerificationQuery;
 import com.aburakkontas.manga.common.auth.queries.results.EmailVerificationQueryResult;
-import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailVerifiedEventHandler {
+public class EmailVerifiedQueryHandler {
 
     private final AuthRepository authRepository;
 
-    public EmailVerifiedEventHandler(AuthRepository authRepository) {
+    public EmailVerifiedQueryHandler(AuthRepository authRepository) {
         this.authRepository = authRepository;
     }
 

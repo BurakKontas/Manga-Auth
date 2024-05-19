@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 public class AuthenticationQueryController {
@@ -176,6 +178,26 @@ public class AuthenticationQueryController {
         var result = queryGateway.query(query, GetUserDetailsFromTokenQueryResult.class).join();
 
         var response = new GetUserDetailsFromTokenResponse();
+        response.setEmail(result.getEmail());
+        response.setFirstName(result.getFirstName());
+        response.setLastName(result.getLastName());
+        response.setPermissions(result.getPermissions());
+        response.setUsername(result.getUsername());
+        response.setUserId(result.getUserId());
+        response.setLastLogin(result.getLastLogin());
+
+        return ResponseEntity.ok(Result.success(response));
+    }
+
+    @GetMapping("/get-user-details-by-id")
+    public ResponseEntity<Result<GetUserDetailsByIdResponse>> getUserDetailsById(@RequestParam UUID userId) {
+        var query = GetUserDetailsByIdQuery.builder()
+                .userId(userId)
+                .build();
+
+        var result = queryGateway.query(query, GetUserDetailsByIdQueryResult.class).join();
+
+        var response = new GetUserDetailsByIdResponse();
         response.setEmail(result.getEmail());
         response.setFirstName(result.getFirstName());
         response.setLastName(result.getLastName());

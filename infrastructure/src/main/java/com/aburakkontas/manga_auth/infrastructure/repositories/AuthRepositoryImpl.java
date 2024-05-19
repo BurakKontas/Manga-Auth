@@ -324,4 +324,31 @@ public class AuthRepositoryImpl implements AuthRepository {
 
         return new GetUserDetailsFromTokenResultDTO(email, firstName, lastName, permissions, username, userId, lastLogin);
     }
+
+    @Override
+    public GetUserDetailsByIdResultDTO getUserDetailsById(GetUserDetailsByIdDTO getUserDetailsByIdDTO) {
+        var user = fusionClient.getClient().retrieveUser(getUserDetailsByIdDTO.getUserId());
+
+        if(!user.wasSuccessful()) {
+            throw new ExceptionWithErrorCode("Failed to retrieve user", ErrorCodes.FAILED_TO_RETRIEVE_USER);
+        }
+
+        var registration = user.getSuccessResponse().user.getRegistrationForApplication(applicationId);
+
+        if(registration == null) {
+            throw new ExceptionWithErrorCode("Failed to retrieve registration", ErrorCodes.FAILED_TO_RETRIEVE_USER);
+        }
+
+        var email = user.getSuccessResponse().user.email;
+        var firstName = user.getSuccessResponse().user.firstName;
+        var lastName = user.getSuccessResponse().user.lastName;
+        var permissions = new ArrayList<String>(registration.roles);
+        var username = registration.username;
+        var userId = registration.id;
+        var lastLogin = registration.lastLoginInstant;
+
+        return new GetUserDetailsByIdResultDTO(email, firstName, lastName, permissions, username, userId, lastLogin);
+
+
+    }
 }
