@@ -3,6 +3,7 @@ package com.aburakkontas.manga_auth.api.controllers;
 import com.aburakkontas.manga_auth.contracts.response.OAuth2CallbackResponse;
 import com.aburakkontas.manga.common.auth.queries.OAuth2CallbackQuery;
 import com.aburakkontas.manga.common.auth.queries.results.OAuth2CallbackQueryResult;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+@Hidden
 @RestController
 @RequestMapping(path = "/oauth2/callback")
 public class OAuth2Controller {
@@ -42,7 +44,8 @@ public class OAuth2Controller {
         response.setRefreshToken(result.getRefreshToken());
 
         var redirectUri = env.getProperty("frontend.uri");
-        var uri = redirectUri + "/login-with-token?token=" + response.getToken() + "&refreshToken=" + response.getRefreshToken() + "&status=success";
+//        var uri = redirectUri + "/login-with-token?token=" + response.getToken() + "&refreshToken=" + response.getRefreshToken() + "&status=success";
+        var uri = redirectUri + "/#token=" + response.getToken() + "&refreshToken=" + response.getRefreshToken() + "&status=success";
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(uri))
                 .build();
