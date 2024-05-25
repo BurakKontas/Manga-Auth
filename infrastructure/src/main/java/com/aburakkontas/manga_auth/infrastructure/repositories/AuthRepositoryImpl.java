@@ -194,6 +194,9 @@ public class AuthRepositoryImpl implements AuthRepository {
         var response = fusionClient.getClient().verifyUserRegistration(verifyRegistrationRequest);
 
         if(!response.wasSuccessful()) {
+            if(response.status == -1) {
+                throw new ExceptionWithErrorCode("Webhook Failed.", ErrorCodes.WEBHOOK_FAILED);
+            }
             throw new ExceptionWithErrorCode("Failed to verify registration", ErrorCodes.FAILED_TO_VERIFY_EMAIL);
         }
 

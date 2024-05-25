@@ -4,8 +4,10 @@ import com.aburakkontas.manga.common.auth.commands.LogoutCommand;
 import com.aburakkontas.manga.common.auth.events.LogoutEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.messaging.MetaData;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.UUID;
@@ -17,7 +19,7 @@ public class LogoutAggregate {
     private String id;
     private String refreshToken;
 
-    public LogoutAggregate() {
+    protected LogoutAggregate() {
     }
 
     @CommandHandler

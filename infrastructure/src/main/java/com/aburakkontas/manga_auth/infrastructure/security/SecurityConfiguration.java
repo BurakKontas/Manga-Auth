@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/error").permitAll()
                     .requestMatchers(
                             "/api/v1/auth/get-user-details-by-id"
                     ).hasAuthority("Admin")

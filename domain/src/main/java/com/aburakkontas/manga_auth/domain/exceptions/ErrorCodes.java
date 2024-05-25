@@ -17,4 +17,5 @@ public class ErrorCodes {
     public static final int MAPPING_ERROR = 613;
     public static final int FAILED_TO_VERIFY_EMAIL = 614;
     public static final int FAILED_TO_EXTRACT_TOKEN = 615;
+    public static final int WEBHOOK_FAILED = 616;
 }
