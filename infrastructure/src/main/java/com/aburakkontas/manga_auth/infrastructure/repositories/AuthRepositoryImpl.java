@@ -317,12 +317,12 @@ public class AuthRepositoryImpl implements AuthRepository {
             throw new ExceptionWithErrorCode("Failed to retrieve registration", ErrorCodes.FAILED_TO_RETRIEVE_USER);
         }
 
+        var userId = user.getSuccessResponse().user.id;
         var email = user.getSuccessResponse().user.email;
         var firstName = user.getSuccessResponse().user.firstName;
         var lastName = user.getSuccessResponse().user.lastName;
         var permissions = new ArrayList<String>(registration.roles);
         var username = registration.username;
-        var userId = registration.id;
         var lastLogin = registration.lastLoginInstant;
 
         return new GetUserDetailsFromTokenResultDTO(email, firstName, lastName, permissions, username, userId, lastLogin);
@@ -342,12 +342,12 @@ public class AuthRepositoryImpl implements AuthRepository {
             throw new ExceptionWithErrorCode("Failed to retrieve registration", ErrorCodes.FAILED_TO_RETRIEVE_USER);
         }
 
+        var userId = user.getSuccessResponse().user.id;
         var email = user.getSuccessResponse().user.email;
         var firstName = user.getSuccessResponse().user.firstName;
         var lastName = user.getSuccessResponse().user.lastName;
         var permissions = new ArrayList<String>(registration.roles);
         var username = registration.username;
-        var userId = registration.id;
         var lastLogin = registration.lastLoginInstant;
 
         return new GetUserDetailsByIdResultDTO(email, firstName, lastName, permissions, username, userId, lastLogin);
