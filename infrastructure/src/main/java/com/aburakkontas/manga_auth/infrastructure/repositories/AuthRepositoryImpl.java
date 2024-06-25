@@ -321,8 +321,8 @@ public class AuthRepositoryImpl implements AuthRepository {
         var email = user.getSuccessResponse().user.email;
         var firstName = user.getSuccessResponse().user.firstName;
         var lastName = user.getSuccessResponse().user.lastName;
-        var permissions = new ArrayList<String>(registration.roles);
-        var username = registration.username;
+        var permissions = new ArrayList<>(registration.roles);
+        var username = user.getSuccessResponse().user.email;
         var lastLogin = registration.lastLoginInstant;
 
         return new GetUserDetailsFromTokenResultDTO(email, firstName, lastName, permissions, username, userId, lastLogin);
@@ -346,7 +346,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         var email = user.getSuccessResponse().user.email;
         var firstName = user.getSuccessResponse().user.firstName;
         var lastName = user.getSuccessResponse().user.lastName;
-        var permissions = new ArrayList<String>(registration.roles);
+        var permissions = new ArrayList<>(registration.roles);
         var username = registration.username;
         var lastLogin = registration.lastLoginInstant;
 
